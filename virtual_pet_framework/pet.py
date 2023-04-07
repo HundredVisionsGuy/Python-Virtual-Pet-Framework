@@ -26,7 +26,6 @@ class Pet:
         self.health = 50
 
 
-
 # global scope
 if __name__ == "__main__":
     # Construct 2 pet instances
