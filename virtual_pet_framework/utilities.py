@@ -15,7 +15,6 @@ def get_file_contents(path: str, filename: str) -> str:
 
     Returns:
         contents: a string of the file contents"""
-
     folder = Path(path)
     file_to_open = folder / filename
     f = open(file_to_open)
@@ -44,11 +43,18 @@ def get_menu_choice(menu: str, legal_choices: tuple) -> str:
     return user_choice
 
 if __name__ == "__main__":
-    contents = get_file_contents("data/", "pet.json")
+    contents = get_file_contents("data/", "pets.json")
     print(contents)
 
     pet_dictionary = json.loads(contents)
     print(pet_dictionary)
+
+    # Create a pet object from pet_dictionary
+    pets = pet_dictionary.get("pets")
+    my_pet = pets[0]
+    pet_name = my_pet.get("name")
+    print(pet_name)
+
     # menu = "\nHere is your list of options:\n\n\t1 - Option #1\n"
     # menu += "\t2 - Option #2\n\t3 - Option #3\n\n"
     # selection = get_menu_choice(menu, ("1", "2", "3"))

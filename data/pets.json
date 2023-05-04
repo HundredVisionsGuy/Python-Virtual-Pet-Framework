@@ -1,12 +1,13 @@
 {
     "pets": [
         {
-            "name": "fluffy",
+            "name": "Fluffy",
             "breed": "rock",
-            "nickname": ["Dwayne"],
+            "nicknames": ["Dwayne"],
             "happiness": 5,
             "hunger": 5,
-            "health": 100
+            "health": 100,
+            "tiredness": 0
         }
     ]
 }

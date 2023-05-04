@@ -3,6 +3,7 @@ filename: pet.py
 Author: Chris Winikka
 Description: A virtual pet complete with pet emotions and behavior.
 """
+import json
 import utilities
 import random
 
@@ -27,6 +28,34 @@ class Pet:
         self.hunger = 4
         self.health = 50
         self.tiredness = 0
+
+    def load_data(self) -> None:
+        """Grabs data from the pet.json file and saves the
+        attributes"""
+        # Get pets from pets.json
+        pets = utilities.get_file_contents("data/", "pets.json")
+        pets_dictionary = json.loads(pets)
+        all_pets = pets_dictionary.get("pets")
+
+        # Try to get our pet based on the name
+        is_our_pet = False
+        for pet_dict in all_pets:
+            is_our_pet = pet_dict.get("name") == self.name
+            if is_our_pet:
+                # this is our pet - we can load the data
+                self.breed = pet_dict.get("breed")
+                self.happiness = pet_dict.get("happiness")
+                self.health = pet_dict.get("health")
+                self.hunger = pet_dict.get("hunger")
+                self.nicknames = pet_dict.get("nicknames")
+                self.tiredness = pet_dict.get("tiredness")
+
+                # get out of the loop
+                break
+            
+            
+
+        # If there is no pet, create and save the data
 
     def play(self):
         """let the user choose how to play with the pet"""
@@ -76,4 +105,5 @@ class Pet:
 if __name__ == "__main__":
     # Construct 2 pet instances
     fluffy = Pet("Fluffy", "rock")
+    fluffy.load_data()
     fluffy.play()
