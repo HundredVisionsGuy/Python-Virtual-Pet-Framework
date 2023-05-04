@@ -4,10 +4,10 @@
             "name": "Fluffy",
             "breed": "rock",
             "nicknames": ["Dwayne"],
-            "happiness": 5,
-            "hunger": 5,
-            "health": 100,
-            "tiredness": 0
+            "happiness": 10,
+            "hunger": 7,
+            "health": 90,
+            "tiredness": 3
         }
     ]
 }
