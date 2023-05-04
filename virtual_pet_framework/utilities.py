@@ -44,7 +44,7 @@ def get_menu_choice(menu: str, legal_choices: tuple) -> str:
     return user_choice
 
 if __name__ == "__main__":
-    contents = get_file_contents("data/", "pet.json")
+    contents = get_file_contents("data/", "pets.json")
     print(contents)
 
     pet_dictionary = json.loads(contents)

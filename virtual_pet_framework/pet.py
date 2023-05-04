@@ -3,6 +3,8 @@ filename: pet.py
 Author: Chris Winikka
 Description: A virtual pet complete with pet emotions and behavior.
 """
+import json
+import uuid
 import utilities
 import random
 
@@ -21,12 +23,53 @@ class Pet:
     # constructor method
     def __init__(self, name: str, breed: str) -> None:
         self.name = name
+        self.ID = uuid.uuid1().hex
         self.breed = breed
         self.nicknames = []
         self.happiness = 5
         self.hunger = 4
         self.health = 50
         self.tiredness = 0
+
+        self.store_pet_data()
+
+    def store_pet_data(self) -> None:
+        """ Insert pet information into the pets.json file"""
+        # TODO:
+        # add some error handling in case the file doesn't exist
+
+        # get the contents of the pets
+        pets_text = utilities.get_file_contents("data/", "pets.json")
+        pets_dictionary = json.loads(pets_text)
+
+        # create a pet dictionary object and append it to the pet_dictionary
+        this_pet = {
+            "name": self.name,
+            "ID": self.ID,
+            "breed": self.breed,
+            "nicknames": self.nicknames,
+            "happiness": self.happiness,
+            "hunger": self.hunger,
+            "health": self.health,
+            "tiredness": self.tiredness
+        }
+
+        # TODO:
+        # Only append the pet if it isn't already there.
+
+        pets_dictionary["pets"].append(this_pet)
+        pets_json = json.dumps(pets_dictionary)
+
+        # Save to pets.json
+        with open("data/pets.json", "w") as outfile:
+            outfile.write(pets_json)
+
+    def load_data(self) -> None:
+        """Grab pet data from the pets.json file and get the attributes"""
+
+        # Get all pets from pets.json
+        print("Loading")
+
 
     def play(self):
         """let the user choose how to play with the pet"""
