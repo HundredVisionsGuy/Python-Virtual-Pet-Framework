@@ -7,6 +7,7 @@ import json
 import uuid
 import utilities
 import random
+from typing import Type
 
 class Pet:
     """A virtual pet (can be used as a base class for other pet types).
@@ -30,8 +31,6 @@ class Pet:
         self.hunger = 4
         self.health = 50
         self.tiredness = 0
-
-        self.store_pet_data()
 
     def store_pet_data(self) -> None:
         """ Insert pet information into the pets.json file"""
@@ -64,12 +63,29 @@ class Pet:
         with open("data/pets.json", "w") as outfile:
             outfile.write(pets_json)
 
-    def load_data(self) -> None:
+    @staticmethod
+    def load_data() -> None:
         """Grab pet data from the pets.json file and get the attributes"""
 
         # Get all pets from pets.json
-        print("Loading")
+        pets = utilities.get_file_contents("data/", "pets.json")
+        pets_dictionary = json.loads(pets)
+        all_pets = pets_dictionary.get("pets")
 
+    @staticmethod
+    def get_pet():
+        """Show user list of pets and allow them to select a pet to play with.
+        """
+        # Get all pets from pets.json
+        pets = utilities.get_file_contents("data/", "pets.json")
+        pets_dictionary = json.loads(pets)
+        all_pets = pets_dictionary.get("pets")
+
+        # show list of pets and let the user select a pet 
+        for pet in all_pets:
+            print(pet["name"])
+
+        # create and return a pet
 
     def play(self):
         """let the user choose how to play with the pet"""
@@ -119,4 +135,6 @@ class Pet:
 if __name__ == "__main__":
     # Construct 2 pet instances
     fluffy = Pet("Fluffy", "rock")
+    fluffy.store_pet_data()
+    mypet = Pet.get_pet()
     fluffy.play()
