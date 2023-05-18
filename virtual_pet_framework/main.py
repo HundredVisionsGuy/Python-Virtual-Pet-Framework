@@ -1,4 +1,15 @@
-""" The Virtual Pet Program """
+"""
+This is the main virtual pet program. 
+TODO: create an interaction loop that provides ways to interact with your pet.
+Examples:
+* create a pet
+* save your pet
+* view all pets
+* bring out your pet
+* play with your pet
+* feed your pet
+* train your pet
+"""
 
 import utilities
 import pet
