@@ -87,6 +87,26 @@ class Pet:
 
         # create and return a pet
 
+    @staticmethod
+    def create_pet(pet_dict: dict):
+        # get pet name and breed
+        name = pet_dict.get("name")
+        breed = pet_dict.get("breed")
+
+        # create pet object
+        pet = Pet(name, breed)
+
+        # set all pet attributes
+        pet.ID = pet_dict.get("ID")
+        pet.nicknames = pet_dict.get("nicknames")
+        pet.happiness = pet_dict.get("happiness")
+        pet.health = pet_dict.get("health")
+        pet.hunger = pet_dict.get("hunger")
+        pet.tiredness = pet_dict.get("tiredness")
+
+        return pet
+
+
     def play(self):
         """let the user choose how to play with the pet"""
         menu = f"\nChoose an option for playing with {self.name}:\n"
