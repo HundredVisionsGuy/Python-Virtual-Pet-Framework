@@ -15,53 +15,70 @@ import utilities
 import json
 from pet import Pet
 
-def main():
-    active_pets = []
-    # Create a menu for pet playground
-    new_menu = """
-    Here is your list of options:
+new_menu = """
+Here is your list of options:
 
-        1 - Option 1: Create a new pet
-        2 - Option 2: Select your pet to interact with
-        3 - Option 3: Save pet data
-        4 - Option 4: Quit
-    """
+    1 - Option 1: Create a new pet
+    2 - Option 2: Select your pet to interact with
+    3 - Option 3: Save pet data
+    4 - Option 4: Quit
+"""
+
+def main():
+    pet = None
+    # Create a menu for pet playground
+    
     options = ("1", "2", "3", "4")
     choice = ""
     while choice != "4":
         choice = utilities.get_menu_choice(new_menu, options)
         if choice == "1":
             pet = create_new_pet()
-            active_pets.append(pet)
         elif choice == "2":
-            pets = utilities.get_file_contents("data/", "pets.json")
-            pets = json.loads(pets)
-            pets = pets.get("pets")
+            pets = get_pets()
             
-            # Loop through all pets asking if the user wants to play with one
-            # of the pets.
-            # IF yes, append that pet to active_pets and break
-            for pet in pets:
-                name = pet.get("name")
-                breed = pet.get("breed")
-                prompt = f"Would you like to play with {name} the {breed}"
-                prompt += "? (y/n) "
-                play_with = input(prompt)
-                if play_with == "y":
-                    # create a pet object with the data
-                    new_pet = Pet.create_pet(pet)
+            # retrieve a pet to play with
+            pet = get_pet(pets)
 
-                    # append pet to active_pets
-                    active_pets.append(new_pet)
-
-            if not active_pets:
+            if not pet:
                 print("\nYou have no pets to play with.")
                 print("Try creating a new pet.")
+                continue
+
+            # TODO Work on function below
+            pet = interact_with_pet(pet)
 
         elif choice == "3":
-            if active_pets:
-                for pet in active_pets:
-                    pet.store_pet_data()
+            if pet:
+                pet.store_pet_data()
+
+def interact_with_pet(pet):
+    """TODO: write the code to interact with your pet"""
+    return pet
+
+def get_pet(pets):
+    for pet in pets:
+        name = pet.get("name")
+        breed = pet.get("breed")
+        prompt = f"Would you like to play with {name} the {breed}"
+        prompt += "? (y/n) "
+        play_with = utilities.get_menu_choice(prompt, ("y", "n"))
+        if play_with == "y":
+            # create a pet object with the data
+            new_pet = Pet.create_pet(pet)
+            return pet
+    return None
+
+def get_pets() -> list:
+    """load the pets from the pets.json file
+    
+    Returns:
+        pets: a list of pet objects
+    """
+    pets = utilities.get_file_contents("data/", "pets.json")
+    pets = json.loads(pets)
+    pets = pets.get("pets")
+    return pets
 
 def create_new_pet():
     """ creates and returns a new pet object"""

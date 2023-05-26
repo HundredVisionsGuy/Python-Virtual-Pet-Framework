@@ -19,7 +19,9 @@ def get_file_contents(path: str, filename: str) -> str:
     folder = Path(path)
     file_to_open = folder / filename
     f = open(file_to_open)
-    return f.read()
+    contents = f.read()
+    f.close()
+    return contents
 
 def get_menu_choice(menu: str, legal_choices: tuple) -> str:
     """displays a menu of options, and asks the user to make a choice.
@@ -44,8 +46,8 @@ def get_menu_choice(menu: str, legal_choices: tuple) -> str:
     return user_choice
 
 if __name__ == "__main__":
-    contents = get_file_contents("data/", "pets.json")
-    print(contents)
+    data = get_file_contents("data/", "gamedata.json")
+    print(data)
 
-    pet_dictionary = json.loads(contents)
-    print(pet_dictionary)
+    game_data = json.loads(data)
+    print(game_data)
